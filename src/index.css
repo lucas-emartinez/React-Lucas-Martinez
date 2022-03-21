@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.navbar .navbar-NavLink {
+  color: gray;
+  text-decoration: none;
+  margin-left: 1rem;
+}
+.navbar-NavLink:hover {
+  color:black
+}
+
+.footer {
+  position: absolute;
+    bottom: 0;
+    padding: 1rem;
+    background: #f0f0f0;
+    width: 100%;
+}
+
+.detail-container {
+  margin-top: 5%;
+}
+
+.counter {
+  left: 0;
+  margin-left: 25%;
+  margin-top: 5%;
+  width: 50%;
+}
+.counter_buy button{
+  margin-top: 5%;
+  width: 100%;
+}
