@@ -11,8 +11,7 @@ export default function ItemDetailContainer() {
   const [loading, setLoading] = useState(true)
   const [producto, setProducto] = useState({})
   const { id } = useParams()
-  console.log(producto)
-  console.log(id)
+
 
   useEffect(() => {
     if (id){
@@ -33,7 +32,7 @@ export default function ItemDetailContainer() {
         <Container className="detail-container">      
           <Row>
             <Col>
-              <ItemDetail  producto={producto} />
+              <ItemDetail producto={producto} />
             </Col>
           </Row>  
         </Container>

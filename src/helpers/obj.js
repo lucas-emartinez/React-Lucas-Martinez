@@ -1,6 +1,6 @@
 
 const obj = [
-    { id: '1', category: 'drones', title: 'Mavic 2 PRO', img: '/img/mavic2pro.png' ,description: 'Drone con grabación 4k para exigentes', price: 400000, stock: 9},
+    { id: '1', category: 'drones', title: 'Drone DJI FPV', img: '/img/fpv.png' ,description: 'Drone deportivo de extrema velocidad', price: 400000, stock: 9},
     { id: '2', category: 'drones', title: 'Mavic 2 Enterprise', img:'/img/mavic2enterprise.png' , description: 'Drone con iluminación y cámara térmica', price: 550000, stock: 46},
     { id: '3', category: 'drones', title: 'Matrice 300 RTK', img: '/img/matrice300rtk.png', description: 'Drone para relevamientos estructurales', price: 1300000, stock: 23},
     { id: '4', category: 'drones', title: 'Mavic 3', img: '/img/mavic3.png', description: 'Drone de última generación multiproposito', price: 500000, stock: 4},

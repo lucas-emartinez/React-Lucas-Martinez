@@ -1,17 +1,16 @@
 
 import { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import Stack from 'react-bootstrap/Stack'
 export default function ItemCount({stock, initial, onAdd}) {
 
   const [count, setCount] = useState(initial);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(false);
 
   const handleCounter = (event) => {
 
-    if(event.target.id == 'minus'){
+    if(event.target.id === 'minus'){
       (count === initial) ? 
-          setError(alert(`La cantidad mínima es ${initial}`)) 
+          setError(`La cantidad mínima es ${initial}`)
           : 
           setCount(count - 1);
     }else{
@@ -21,11 +20,7 @@ export default function ItemCount({stock, initial, onAdd}) {
         setCount(count + 1);
     }
   }
-
-  const addToCart = () => {
-    console.log(count)
-  }
-
+  
   return (
     <>
       <div className='w-100'>
@@ -35,7 +30,7 @@ export default function ItemCount({stock, initial, onAdd}) {
             <Button id="plus" onClick={handleCounter} className="btn btn-secondary">+</Button>
         </div>
         <div className='counter_buy'>
-          <Button onClick={addToCart} className="btn btn">Comprar</Button>
+          <Button value={count} onClick={() => onAdd(count)} className="btn">Comprar</Button>
         </div>
       </div>
     </>

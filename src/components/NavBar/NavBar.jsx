@@ -4,7 +4,7 @@ import Container from "react-bootstrap/Container";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Widget from "../Widget/Widget";
+import CartWidget from "../Widget/Cart";
 import { NavLink } from "react-router-dom";
 
 
@@ -14,7 +14,7 @@ export default function NavBar({componenteContainer}) {
       <Navbar bg="light" expand="lg" >
         <Container fluid>
           <NavLink to='/' style={{ textDecoration: 'none' }}>
-            <Navbar.Brand href="#">AirCaption</Navbar.Brand>
+            <Navbar.Brand>UAVProject</Navbar.Brand>
           </NavLink>
           <Navbar.Toggle aria-controls="navbarScroll" />
           <Navbar.Collapse id="navbarScroll">
@@ -23,7 +23,7 @@ export default function NavBar({componenteContainer}) {
               navbarScroll
             >
               <NavLink className='navbar-NavLink' to="/">Inicio</NavLink>
-              <NavLink className='navbar-NavLink' to='category/drones'>Drones</NavLink>
+              <NavLink className='navbar-NavLink'  href="#productos" to='category/drones'>Drones</NavLink>
               <NavDropdown className='navbar-NavLink' title="Accesorios">
                 <NavDropdown.ItemText>
                   <NavLink to='category/batteries' className='navbar-NavLink'>
@@ -43,10 +43,9 @@ export default function NavBar({componenteContainer}) {
               </NavDropdown>
             </Nav>
             <Form className="d-flex">
-            
               <NavLink to='/cart'>
                 <Button className="border-0 disabled" variant="outline-dark">
-                  <Widget />
+                  <CartWidget />
                 </Button>
               </NavLink>
             </Form>

@@ -1,17 +1,28 @@
 import { useState } from "react";
 import ItemCount from "../ItemCount/ItemCount";
 import Card from 'react-bootstrap/Card'
+import ItemCountCart from "../ItemCount/ItemCountCart";
+import { useCartContext } from "../../../context/CartContext";
 
 export default function ItemDetail({producto}) {
 
-    const [cart, setCart] = useState(0)
+    const { addToCart, cartList, setPrice, price } = useCartContext()
 
-    const addToCart = () => {
-
+    const [buttonCart, setButtonCart] = useState('add');
+    
+    const onAdd = (cant) => {
+        setButtonCart('finish');
+        const productToAdd = cartList.find(prod => prod.id === producto.id)
+        if(productToAdd){
+            setPrice(price + (productToAdd.price * productToAdd.cantidad))
+            productToAdd.cantidad += cant;
+        } else {
+            addToCart( {...producto, cantidad: cant} )
+        }
     }
-
+    
     return (
-        <div className="row">
+        <div className="row mb-5">
             <div className="col">
                 <img width="350" height="300" src={`${producto.img}`} alt="" />
             </div>
@@ -21,12 +32,17 @@ export default function ItemDetail({producto}) {
                         <strong><h3>{producto.title}</h3></strong>
                     </Card.Header>
                     <Card.Body>
-                        <p>{producto.category} > {producto.title}</p>
+                        <p>{producto.category} - {producto.title}</p>
                         <h4>$ {producto.price}</h4>
                         <h6>Cantidad disponible: {producto.stock}</h6>
                     </Card.Body>
                     <Card.Footer className="detail-container_buy">
-                        <ItemCount stock={producto.stock} initial={1} onAdd={addToCart} />
+                        {
+                            buttonCart === 'add' ?
+                                <ItemCount stock={producto.stock} initial={1} onAdd={onAdd} />
+                                :
+                                <ItemCountCart />
+                        }
                     </Card.Footer>
                 </Card>
             </div>
