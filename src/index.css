@@ -70,9 +70,8 @@ body {
 }
 
   footer {
-    bottom: 0;
     background: #f0f0f0;
-    width: 100%;
+    
 }
 
 .detail-container {
@@ -144,30 +143,18 @@ body {
   height: 100px;
 }
 
- .cartList img{
-  width: 20%;
+ .cartList img {
+  width: 15%;
   height: auto;
 }
 
- 
-.cartList_title{
-  margin-left: 1rem;
-  width: 30%;
-  padding: 1rem;
+.cartList_title {
+  width: 20%;
 }
 
-.cartList_cantidad{
-  padding: 1rem;
-  width: 15%;
-}
-
-.cartList_price{
-  width: 30%;
-  color: #0275d8
-}
 
 .btn-CartItem {
-  width: 10%;
+  width: 15%;
 
 } 
 

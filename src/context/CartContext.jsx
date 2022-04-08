@@ -14,7 +14,6 @@ export default function CartContextProvider({ children }) {
 
     const addToCart = (item) => {
         setcartList( [ ...cartList, item ] )
-        setPrice(price + (item.price * item.cantidad))
     }
 
     const removeCart = () => {
@@ -26,11 +25,8 @@ export default function CartContextProvider({ children }) {
         const itemToDelete = cartList.find((prod) => prod.id === id)
         if(itemToDelete){
             const index = cartList.indexOf(itemToDelete);
-            const priceDeleted = (itemToDelete.price * itemToDelete.cantidad);
-            console.log(priceDeleted)
             cartList.splice(index, 1)
             setcartList([...cartList]);
-            setPrice(price - priceDeleted)
         } 
     }
 
@@ -38,7 +34,6 @@ export default function CartContextProvider({ children }) {
         <CartContext.Provider value={{
             cartList,
             price,
-            setPrice,
             addToCart,
             removeCart,
             removeItem,

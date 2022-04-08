@@ -6,7 +6,7 @@ const getFetch = new Promise((resolve, reject) => {
     if (condition) {
         setTimeout(() => {
             resolve(obj);
-        },2000)
+        }, 2000)
     } else {
         reject('400 - Not Found');
     }

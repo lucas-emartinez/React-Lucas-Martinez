@@ -41,8 +41,8 @@ function App() {
               <Route path='/cart' element={<Cart />} />
               <Route path='/*' element={<Navigate to='/' />} />
             </Routes>
+            <Footer />
           </div>
-          <Footer />
         </CartContextProvider>
       </BrowserRouter>
     </Suspense >

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 export default function Item({ producto }) {
   return (
-
+        <>
         <div className="container">
           <div className="row">
             <div className="col">
@@ -26,5 +26,6 @@ export default function Item({ producto }) {
             </div>
           </div>
         </div>
+        </>
   )
 }

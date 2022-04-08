@@ -6,15 +6,14 @@ import { useCartContext } from "../../../context/CartContext";
 
 export default function ItemDetail({producto}) {
 
-    const { addToCart, cartList, setPrice, price } = useCartContext()
+    const { addToCart, cartList} = useCartContext()
 
-    const [buttonCart, setButtonCart] = useState('add');
+    const [buttonCart, setButtonCart] = useState(false);
     
     const onAdd = (cant) => {
-        setButtonCart('finish');
+        setButtonCart(true);
         const productToAdd = cartList.find(prod => prod.id === producto.id)
         if(productToAdd){
-            setPrice(price + (productToAdd.price * productToAdd.cantidad))
             productToAdd.cantidad += cant;
         } else {
             addToCart( {...producto, cantidad: cant} )
@@ -38,10 +37,11 @@ export default function ItemDetail({producto}) {
                     </Card.Body>
                     <Card.Footer className="detail-container_buy">
                         {
-                            buttonCart === 'add' ?
-                                <ItemCount stock={producto.stock} initial={1} onAdd={onAdd} />
-                                :
+                        buttonCart ?
                                 <ItemCountCart />
+                                :
+                                <ItemCount stock={producto.stock} initial={1} onAdd={onAdd} />
+                                
                         }
                     </Card.Footer>
                 </Card>
