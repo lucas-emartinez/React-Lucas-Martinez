@@ -52,7 +52,6 @@ export default function NavBar({componenteContainer}) {
                   <CartWidget />
                 </Button>
               </NavLink>
-              <h1>{console.log(cantidadCart)}</h1>
               <h5 className="cantCart mt-2">{cantidadCart()}</h5>
             </Form>
           </Navbar.Collapse>

@@ -1,14 +1,13 @@
-import { addDoc, collection, documentId, getDocs, getFirestore, query, updateDoc, where, writeBatch } from "firebase/firestore";
+import { addDoc, collection, documentId, getDocs, getFirestore, query, where, writeBatch } from "firebase/firestore";
 import Button from "react-bootstrap/esm/Button";
-import { getDropdownMenuPlacement } from "react-bootstrap/esm/DropdownMenu";
 import { useCartContext } from "../../context/CartContext"
 
 export default function Cart() {
 
-  const { cartList, removeCart, removeItem, subtotal } = useCartContext();
+  const { cartList, removeCart, removeItem, subtotal, emptyMessage } = useCartContext();
   
-  const order = async (e) => {
-    console.log('Generando orden')
+
+    const order = async () => {
     const date = new Date()
     let orden = {}
 
@@ -31,10 +30,6 @@ export default function Cart() {
     await addDoc(queryCollectionOrders, orden)
       .then( ({id}) => console.log(id))
 
-    //const queryUpdate = doc(db, 'items', '')
-    //updateDoc(queryUpdate, {
-      //stock: 100
-    //})
 
     const queryCollectionItems = collection(db, 'items')
 
@@ -63,6 +58,8 @@ export default function Cart() {
               <Button className="btn btn-sm btn-secondary w-25" onClick={removeCart}>Vaciar carrito</Button>
             </div>
             <hr className="mb-3"/>
+            {emptyMessage()}
+            
             {
             cartList.map(producto =>
               <div key={producto.id} className="row shadow-sm rounded-3 my-2">

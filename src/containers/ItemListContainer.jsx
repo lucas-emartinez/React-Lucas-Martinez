@@ -15,35 +15,23 @@ export default function ItemListContainer({ welcome }) {
     const [prods, setProds] = useState([]);
     const { id } = useParams();
 
-    
+    const getItems = async (id) => {
+        try{
+            const db = getFirestore()
+            const queryCollectionChoice = !id ? collection(db, 'items') :  query(collection(db, 'items'), where('category', '==', id))
+
+            const response = await getDocs(queryCollectionChoice)
+            setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} )))
+            setLoading(false)
+        
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
-
-        async function getItems(){
-
-            try{
-                const db = getFirestore()
-                const queryCollection = collection(db, 'items')
-
-                if(id) {
-                    const queryFilter = query(queryCollection, where('category', '==', id))
-                    const response = await getDocs(queryFilter)
-                    setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} )))
-                    setLoading(false)
-                    
-                } else {
-                    const response = await getDocs(queryCollection)
-                    setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} )))
-                    setLoading(false)
-                }
-            } catch (error) {
-                console.log(error)
-            }
-        //const queryFilter = query(queryCollection, where('','',''))
-        }
-
-        getItems()
-
+    
+        getItems(id)
 
     }, [id])
 

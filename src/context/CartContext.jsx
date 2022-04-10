@@ -32,7 +32,12 @@ export default function CartContextProvider({ children }) {
 
     const removeCart = () => {
         setcartList([])
-    
+    }
+
+    const emptyMessage = () => {
+        if(cartList.length === 0){
+            return <h6 className="text-secondary">Carrito vacio</h6>
+        }
     }
 
     const subtotal = () => {
@@ -59,7 +64,8 @@ export default function CartContextProvider({ children }) {
             removeCart,
             removeItem,
             subtotal,
-            cantidadCart
+            cantidadCart,
+            emptyMessage
         }}>
             { children }
         </CartContext.Provider>

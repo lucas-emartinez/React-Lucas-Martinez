@@ -4,18 +4,17 @@ import Button from 'react-bootstrap/Button';
 export default function ItemCount({stock, initial, onAdd}) {
 
   const [count, setCount] = useState(initial);
-  const [error, setError] = useState(false);
 
   const handleCounter = (event) => {
 
     if(event.target.id === 'minus'){
       (count === initial) ? 
-          setError(`La cantidad mínima es ${initial}`)
-          : 
-          setCount(count - 1);
+        alert(`La cantidad mínima es ${initial}`)
+        : 
+        setCount(count - 1);
     }else{
       (count === stock) ? 
-        setError(alert(`La cantidad máxima es ${stock}`)) 
+        alert(`La cantidad máxima es ${stock}`)
         : 
         setCount(count + 1);
     }
