@@ -36,7 +36,7 @@ export default function CartContextProvider({ children }) {
     }
 
     const subtotal = () => {
-        return cartList.reduce((acum, item) => acum = acum + (item.price * item.cantidad), 0)
+        return cartList.reduce((acum, item) => acum += (item.price * item.cantidad), 0)
     }
 
     const removeItem = (id) => {
@@ -48,6 +48,10 @@ export default function CartContextProvider({ children }) {
         } 
     }
 
+    const cantidadCart = () =>{
+        return cartList.reduce((acum, item) => acum += item.cantidad, 0)
+    }
+
     return (
         <CartContext.Provider value={{
             cartList,
@@ -55,6 +59,7 @@ export default function CartContextProvider({ children }) {
             removeCart,
             removeItem,
             subtotal,
+            cantidadCart
         }}>
             { children }
         </CartContext.Provider>

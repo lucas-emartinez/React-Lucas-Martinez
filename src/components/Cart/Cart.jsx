@@ -1,10 +1,59 @@
+import { addDoc, collection, documentId, getDocs, getFirestore, query, updateDoc, where, writeBatch } from "firebase/firestore";
 import Button from "react-bootstrap/esm/Button";
+import { getDropdownMenuPlacement } from "react-bootstrap/esm/DropdownMenu";
 import { useCartContext } from "../../context/CartContext"
 
 export default function Cart() {
 
   const { cartList, removeCart, removeItem, subtotal } = useCartContext();
   
+  const order = async (e) => {
+    console.log('Generando orden')
+    const date = new Date()
+    let orden = {}
+
+    orden.buyer = {name: 'Lucas', email: 'luketaapeeola@gmail.com', cel: '+541133755923'}
+    orden.total = subtotal()
+    orden.date = `${date.toLocaleDateString()} ${date.getHours()}:${date.getMinutes()}`
+    orden.items = cartList.map(item => {
+      const id = item.id
+      const nombre = item.title
+      const price = item.price * item.cantidad
+
+      return {id, nombre, price}
+    })
+
+    console.log(orden)
+
+    const db = getFirestore();
+    const queryCollectionOrders = collection(db, 'orders')
+
+    await addDoc(queryCollectionOrders, orden)
+      .then( ({id}) => console.log(id))
+
+    //const queryUpdate = doc(db, 'items', '')
+    //updateDoc(queryUpdate, {
+      //stock: 100
+    //})
+
+    const queryCollectionItems = collection(db, 'items')
+
+    const stockUpdate = await query(queryCollectionItems,
+      where(documentId(), 'in', cartList.map(item => item.id)))
+
+    const batch = writeBatch(db)
+
+    await getDocs(stockUpdate)
+      .then(response => response.docs.forEach(res => batch.update(res.ref, {
+        stock: res.data().stock - cartList.find(item => item.id === res.id).cantidad
+      })))
+      .finally(console.log('ORDEN FINALIZADA'))
+
+    batch.commit()
+    
+  }
+
+
   return (
     <div className="container pt-4">
         <div className="row mb-5 pb-5 m-4">
@@ -54,7 +103,7 @@ export default function Cart() {
                         )}
                     </tbody>
                   </table>
-                  <Button className="btn btn-primary">Comprar</Button>
+                  <Button onClick={order} className="btn btn-primary">Comprar</Button>
                 </div>
               </div>
             </div>

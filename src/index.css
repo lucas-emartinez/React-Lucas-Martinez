@@ -69,7 +69,15 @@ body {
   color:black
 }
 
-  footer {
+.cantCart {
+  color: gray;
+}
+.navbar {
+  position: fixed;
+  top: 0;
+}
+
+footer {
     background: #f0f0f0;
 }
 

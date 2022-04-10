@@ -6,12 +6,16 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import CartWidget from "../Widget/Cart";
 import { NavLink } from "react-router-dom";
+import { useCartContext } from "../../context/CartContext"
 
 
 export default function NavBar({componenteContainer}) {
+
+  const { cantidadCart } = useCartContext();
+
   return (
     <>
-      <Navbar bg="light" expand="lg" >
+      <Navbar bg="light" expand="md" >
         <Container fluid>
           <NavLink to='/' style={{ textDecoration: 'none' }}>
             <Navbar.Brand>UAVProject</Navbar.Brand>
@@ -42,12 +46,14 @@ export default function NavBar({componenteContainer}) {
                 </NavDropdown.ItemText>
               </NavDropdown>
             </Nav>
-            <Form className="d-flex">
+            <Form className="d-flex align-items-center">
               <NavLink to='/cart'>
                 <Button className="border-0 disabled" variant="outline-dark">
                   <CartWidget />
                 </Button>
               </NavLink>
+              <h1>{console.log(cantidadCart)}</h1>
+              <h5 className="cantCart mt-2">{cantidadCart()}</h5>
             </Form>
           </Navbar.Collapse>
         </Container>

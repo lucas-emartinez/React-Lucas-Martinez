@@ -44,7 +44,7 @@ export default function ItemListContainer({ welcome }) {
 
         getItems()
 
-        
+
     }, [id])
 
     
@@ -55,8 +55,10 @@ export default function ItemListContainer({ welcome }) {
                     <h1>Bienvenido</h1>
                     <h2>
                         <Typed
-                            strings={['Todos podemos volar']}
-                            typeSpeed={40}
+                            strings={['Todos podemos volar', 'Tu primer drone!']}
+                            typeSpeed={50}
+                            backSpeed={100}
+                            loop
                             />
                     </h2>
                 </div>
