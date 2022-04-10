@@ -4,7 +4,7 @@ import Instagram from "../Widget/Instagram"
 import Tiktok from "../Widget/Tiktok"
 export default function Footer() {
     return (
-                <footer className="footer bg-footer text-white pt-5 pb-4">
+                <footer className="footer bg-footer text-white pt-5 ">
                     <div className="container text-center text-md-left">
                         <div className="row text-center text-md-left">
                             <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
@@ -47,9 +47,9 @@ export default function Footer() {
                                 </p>
                             </div>
 
-                            <hr className="mb-4" />
+                            <hr />
 
-                            <div className="row mt-5">
+                            <div className="row mt-4">
                                 <div className="col-md-12 col-lg-12 text-dark">
                                     <p>Copyright @2022 - Todos los derechos reservados - UAVProject</p>
                                 </div>

@@ -16,7 +16,7 @@ export default function Item({ producto }) {
                     </span>
                   </div>
                   <div className="cost mt-3 text-dark">
-                    <span>${producto.price}</span>
+                    <span>$ {(producto.price).toLocaleString('es-AR')}</span>
                   </div>
                   <Link to={`/detail/${producto.id}`}>
                     <Button className="btn-landing btn-primary mt-3">Ver Producto</Button>

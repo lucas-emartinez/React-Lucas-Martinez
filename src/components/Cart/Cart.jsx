@@ -1,12 +1,10 @@
-import { useEffect } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { useCartContext } from "../../context/CartContext"
 
 export default function Cart() {
 
-  const { cartList, price, removeCart, removeItem } = useCartContext();
-
-
+  const { cartList, removeCart, removeItem, subtotal } = useCartContext();
+  
   return (
     <div className="container pt-4">
         <div className="row mb-5 pb-5 m-4">
@@ -16,13 +14,14 @@ export default function Cart() {
               <Button className="btn btn-sm btn-secondary w-25" onClick={removeCart}>Vaciar carrito</Button>
             </div>
             <hr className="mb-3"/>
-            {cartList.map(producto =>
+            {
+            cartList.map(producto =>
               <div key={producto.id} className="row shadow-sm rounded-3 my-2">
                 <li className="cartList_items">
                   <img src={`${producto.img}`} alt={producto.title} />
                   <h6 className="cartList_title">{producto.title}</h6>
                   <h6 className="cartList_cantidad">X{producto.cantidad}</h6>
-                  <h6 className="cartList_price"><strong>$ {(producto.price * producto.cantidad).toLocaleString('es-AR')}</strong></h6>
+                  <h6 className="cartList_price"><strong>$ {(producto.price * producto.cantidad).toLocaleString('es-AR', {minimumFractionDigits: 2})}</strong></h6>
                   <Button onClick={() => removeItem(producto.id)} className="btn btn-danger my-2 btn-CartItem">X</Button>
                 </li>
               </div>
@@ -35,7 +34,7 @@ export default function Cart() {
                 <div className="table-responsive-sm card-text">
                   <table className="table caption table-hover text-center">
                     <caption className="mt-4">
-                      <h5>Subtotal: $ {(price).toLocaleString()}</h5>
+                      <h5>Subtotal: $ {subtotal().toLocaleString('es-AR', {minimumFractionDigits: 2})}</h5>
                     </caption>  
                     <thead className="table-dark rounded-3">
                       <tr>

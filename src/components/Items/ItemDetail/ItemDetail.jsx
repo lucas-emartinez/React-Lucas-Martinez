@@ -6,18 +6,13 @@ import { useCartContext } from "../../../context/CartContext";
 
 export default function ItemDetail({producto}) {
 
-    const { addToCart, cartList} = useCartContext()
+    const { addToCart } = useCartContext()
 
     const [buttonCart, setButtonCart] = useState(false);
     
     const onAdd = (cant) => {
         setButtonCart(true);
-        const productToAdd = cartList.find(prod => prod.id === producto.id)
-        if(productToAdd){
-            productToAdd.cantidad += cant;
-        } else {
-            addToCart( {...producto, cantidad: cant} )
-        }
+        addToCart( {...producto, cantidad: cant} )
     }
     
     return (

@@ -9,44 +9,54 @@ import Loading from '../../components/Loading/Loading'
 import { collection, doc, getDoc, getFirestore, query, where } from "firebase/firestore";
 export default function ItemDetailContainer() {
 
-  const [loading, setLoading] = useState(true)  
+  const [loading, setLoading] = useState(true)
   const [prod, setProd] = useState({})
   const { id } = useParams()
 
 
   useEffect(() => {
-    if (id){
-        const db = getFirestore()
-        const queryDoc = doc(db, 'items', id)
-        getDoc(queryDoc)
-          .then(response => setProd( {id: response.id, ...response.data() }))
-          .catch(err => console.log(err))
-          .finally( () => setLoading(false))
+
+    async function getDetail() {
+
+      try {
+        if (id) {
+          const db = getFirestore()
+          const queryDoc = doc(db, 'items', id)
+          const response = await getDoc(queryDoc)
+          setProd({ id: response.id, ...response.data() })
+          setLoading(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
-}, [id])
+
+    getDetail()
+    
+  }, [id])
 
 
-// .then(response => response.find(item => item.id === id))
-//             .then(prod => setProd(prod))
-//             .catch(err => console.log(err))
-//             .finally(() => setLoading(false))
+  // .then(response => response.find(item => item.id === id))
+  //             .then(prod => setProd(prod))
+  //             .catch(err => console.log(err))
+  //             .finally(() => setLoading(false))
   return (
     <>
-     <Container style={{ textAlign: 'center' }}>
-      {
-        
-        (loading) ?
-        <Loading />
-        :
-        <Container className="detail-container">      
-          <Row>
-            <Col>
-              <ItemDetail producto={prod} />
-            </Col>
-          </Row>  
-        </Container>
-      }
+      <Container style={{ textAlign: 'center' }}>
+        {
+
+          (loading) ?
+            <Loading />
+            :
+            <Container className="detail-container">
+              <Row>
+                <Col>
+                  <ItemDetail producto={prod} />
+                </Col>
+              </Row>
+            </Container>
+        }
       </Container>
-   </> 
+    </>
   )
 }

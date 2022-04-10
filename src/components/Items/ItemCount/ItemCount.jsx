@@ -30,7 +30,7 @@ export default function ItemCount({stock, initial, onAdd}) {
             <Button id="plus" onClick={handleCounter} className="btn btn-secondary">+</Button>
         </div>
         <div className='counter_buy'>
-          <Button value={count} onClick={() => onAdd(count)} className="btn">Comprar</Button>
+          <Button value={count} onClick={ () => onAdd(count)} className="btn">Comprar</Button>
         </div>
       </div>
     </>

@@ -4,8 +4,7 @@ import Loading from '../components/Loading/Loading';
 import ItemList from '../components/Items/ItemList/ItemList';
 import { useParams } from 'react-router-dom';
 import { collection, getDocs, getFirestore, query, where } from 'firebase/firestore'
-import AOS from "aos";
-import "aos/dist/aos.css";
+import Typed from 'react-typed'
 
 
 
@@ -19,23 +18,33 @@ export default function ItemListContainer({ welcome }) {
     
 
     useEffect(() => {
-        const db = getFirestore()
-        const queryCollection = collection(db, 'items')
-        AOS.init();
-         if(id) {
-            const queryFilter = query(queryCollection, where('category', '==', id))
-            getDocs(queryFilter)
-            .then(response => setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} ))))
-            .catch(err => console.log(err))
-            .finally(() => setLoading(false))
-            
-         } else {
-            getDocs(queryCollection)
-                .then(response => setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} ))))
-                .catch(err => console.log(err))
-                .finally(() => setLoading(false))
-         }
+
+        async function getItems(){
+
+            try{
+                const db = getFirestore()
+                const queryCollection = collection(db, 'items')
+
+                if(id) {
+                    const queryFilter = query(queryCollection, where('category', '==', id))
+                    const response = await getDocs(queryFilter)
+                    setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} )))
+                    setLoading(false)
+                    
+                } else {
+                    const response = await getDocs(queryCollection)
+                    setProds(response.docs.map(producto => ( {id: producto.id, ...producto.data()} )))
+                    setLoading(false)
+                }
+            } catch (error) {
+                console.log(error)
+            }
         //const queryFilter = query(queryCollection, where('','',''))
+        }
+
+        getItems()
+
+        
     }, [id])
 
     
@@ -44,7 +53,12 @@ export default function ItemListContainer({ welcome }) {
             <section id="inicio" className="d-flex align-items-center">
                 <div className="container d-flex flex-column justify-content-end">
                     <h1>Bienvenido</h1>
-                    
+                    <h2>
+                        <Typed
+                            strings={['Todos podemos volar']}
+                            typeSpeed={40}
+                            />
+                    </h2>
                 </div>
             </section>
             <div className='my-5'>
