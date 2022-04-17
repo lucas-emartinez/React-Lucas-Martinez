@@ -9,6 +9,9 @@ import { useForm } from "react-hook-form";
 import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
 import Spinner from 'react-bootstrap/Spinner'
+import SweetAlert2 from 'react-sweetalert2';
+import { useNavigate } from "react-router-dom"
+
 
 
 
@@ -16,8 +19,14 @@ import Spinner from 'react-bootstrap/Spinner'
 export default function Checkout() {
 
   const MAX_STEPS = 3;
+  const [loading, setLoading] = useState(false)
+  const { cartList, subtotal } = useCartContext();
+  const [show, setShow] = useState(false)
   const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm({ mode: 'all' });
   const [formStep, setFormStep] = useState(1)
+  const [swalProps, setSwalProps] = useState({});
+  const navigate = useNavigate()
+
   const completeFormStep = (event) => {
     if (event.target.value === 'back') {
       setFormStep(formStep - 1)
@@ -25,6 +34,9 @@ export default function Checkout() {
       setFormStep(formStep + 1);
     }
   }
+
+
+
   const renderButtons = () => {
     if (formStep === 3) {
       return (
@@ -69,9 +81,6 @@ export default function Checkout() {
     }
   }
 
-  const [loading, setLoading] = useState(false)
-  const { cartList, subtotal } = useCartContext();
-  const [show, setShow] = useState(false)
 
 
   const handleClose = () => setShow(false);
@@ -92,9 +101,9 @@ export default function Checkout() {
 
 
   const onSubmit = data => {
-
+    setSwalProps({})
+    setShow(false)
     const order = async () => {
-
       const date = new Date()
       let orden = {}
 
@@ -105,17 +114,29 @@ export default function Checkout() {
         const id = item.id
         const nombre = item.title
         const price = item.price * item.cantidad
-
-        return { id, nombre, price }
+      
+        return { id, nombre, price }  
       })
 
-      console.log(orden)
-
+      
+      
       const db = getFirestore();
       const queryCollectionOrders = collection(db, 'orders')
 
       await addDoc(queryCollectionOrders, orden)
-        .then(({ id }) => console.log(id))
+        .then(({ id }) => {
+          setSwalProps({
+          show: true,
+          icon: 'success',
+          title: 'Compra finalizada',
+          text: `El ID de su compra es: ${ id } `,
+          confirmButtonText: 'OK',
+          confirmButtonColor: 'green'
+        })
+      }
+      )
+        
+    
 
 
       const queryCollectionItems = collection(db, 'items')
@@ -131,18 +152,19 @@ export default function Checkout() {
         .finally(console.log('ORDEN FINALIZADA'))
 
       batch.commit()
-
+   
     }
-
+    
     order()
+    
   }
 
 
 
   return (
     <>
+    <SweetAlert2 {...swalProps} />
       {
-
         loading ?
           (
             <Button variant="dark" disabled>
@@ -162,6 +184,7 @@ export default function Checkout() {
             <Button variant="secondary" onClick={handleShow}>Comprar</Button>
 
             <Modal show={show} onHide={handleClose}>
+              
               <Modal.Header closeButton className="bg-light shadow-lg">
                 <Modal.Title className="text-dark">Checkout</Modal.Title>
               </Modal.Header>
