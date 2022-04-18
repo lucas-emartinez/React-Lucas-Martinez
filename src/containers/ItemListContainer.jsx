@@ -54,9 +54,8 @@ export default function ItemListContainer() {
             <div className='my-5'>
     
                 <Container style={{ textAlign: 'center' }}>
-                    <div className='d-flex flex-row'>
-                        <h4 className='py-5 '>Productos</h4>
-                    </div>
+                  
+                    <h4 className='py-5 '>Productos</h4>
                     
                     {
                         loading ?
