@@ -10,7 +10,6 @@ import Row from "react-bootstrap/esm/Row"
 import Col from "react-bootstrap/esm/Col"
 import Spinner from 'react-bootstrap/Spinner'
 import SweetAlert2 from 'react-sweetalert2';
-import { useNavigate } from "react-router-dom"
 
 
 
@@ -20,12 +19,11 @@ export default function Checkout() {
 
   const MAX_STEPS = 3;
   const [loading, setLoading] = useState(false)
-  const { cartList, subtotal } = useCartContext();
+  const { cartList, subtotal, removeCart } = useCartContext();
   const [show, setShow] = useState(false)
   const { register, handleSubmit, formState: { errors, isValid }, watch } = useForm({ mode: 'all' });
   const [formStep, setFormStep] = useState(1)
   const [swalProps, setSwalProps] = useState({});
-  const navigate = useNavigate()
 
   const completeFormStep = (event) => {
     if (event.target.value === 'back') {
@@ -132,13 +130,11 @@ export default function Checkout() {
           text: `El ID de su compra es: ${ id } `,
           confirmButtonText: 'OK',
           confirmButtonColor: 'green'
-        })
-      }
+          })
+        }
       )
         
-    
-
-
+  
       const queryCollectionItems = collection(db, 'items')
       const stockUpdate = await query(queryCollectionItems,
         where(documentId(), 'in', cartList.map(item => item.id)))
@@ -148,7 +144,8 @@ export default function Checkout() {
       await getDocs(stockUpdate)
         .then(response => response.docs.forEach(res => batch.update(res.ref, {
           stock: res.data().stock - cartList.find(item => item.id === res.id).cantidad
-        })))
+        }))).catch(error => (`Error: ${error}`))
+        .then(() => removeCart())
         .finally(console.log('ORDEN FINALIZADA'))
 
       batch.commit()

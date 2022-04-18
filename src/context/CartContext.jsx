@@ -14,7 +14,6 @@ export default function CartContextProvider({ children }) {
     const [cartList, setcartList] = useState([]);
 
 
-
     const isInCart = (id) => {
         return cartList.some(prod => prod.id === id)
     }
@@ -56,7 +55,10 @@ export default function CartContextProvider({ children }) {
     }
 
     const cantidadCart = () =>{
-        return cartList.reduce((acum, item) => acum += item.cantidad, 0)
+        const result = cartList.reduce((acum, item) => acum += item.cantidad, 0);
+        if (result !== 0){
+            return result
+        }
     }
 
     return (

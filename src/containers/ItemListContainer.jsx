@@ -8,8 +8,7 @@ import { collection, getDocs, getFirestore, query, where } from 'firebase/firest
 import Typed from 'react-typed'
 
 
-
-export default function ItemListContainer({ welcome }) {
+export default function ItemListContainer() {
 
 
     const [loading, setLoading] = useState(true);
@@ -55,13 +54,15 @@ export default function ItemListContainer({ welcome }) {
             <div className='my-5'>
     
                 <Container style={{ textAlign: 'center' }}>
-                    <h4 className='py-5 '>Productos</h4>
+                    <div className='d-flex flex-row'>
+                        <h4 className='py-5 '>Productos</h4>
+                    </div>
+                    
                     {
                         loading ?
                             <Loading className='pt-5' />
                             :
-
-                            <ItemList data-aos="zoom-in" data-aos-duration="2000"  id="productos" prods={prods} />
+                            <ItemList id="productos" prods={prods} />
                     }
                 </Container>
             </div>
